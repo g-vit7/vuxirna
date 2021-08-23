@@ -67,7 +67,7 @@ function change(target){
 	document.getElementById(target).style.display="block";
 }
 
-function prog(){
+/* function prog(){
 	switch(progress){
 		case 0:
 			text.innerHTML="You are unconscious. You can't feel yourself. You are in complete nothingness, in the void of the dark.";
@@ -120,7 +120,7 @@ function prog(){
 			progress++;
 			break;
 	}
-}
+}*/
 
 function setTheme(main,dark,behind,light,txt){
 	d.style.setProperty('--main', main.toString());
