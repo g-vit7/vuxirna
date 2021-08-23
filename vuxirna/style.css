@@ -24,6 +24,7 @@ body {
 
 nav {
 	background-color: var(--main);
+	height:10%;
 }
 
 li {
@@ -65,15 +66,45 @@ button {
 }
 
 .click:active {
-	text-shadow: 0 0 6px white;
-	box-shadow: 0 0 6px white;
+	text-shadow: 0 0 6px var(--light);
+	box-shadow: 0 0 6px var(--light);
+}
+
+a.invItems {
+	width: 20vw;
+	background:transparent;
+	border: 2px solid transparent;
+	padding: 4px;
+	margin: auto;
+}
+.invItems:hover {
+	box-shadow: 0 0 4px var(--main);
+}
+.invItems:active {
+	border: 2px inset var(--main);
+}
+
+div a.selectedInvItem {
+	border: 2px inset var(--main);
+}
+
+#inv {
+	width:25%;
+	height:100%;
+}
+#invDesc {
+	border: 1px solid var(--main);
+	height: 101%;
+	width:50%;
+	text-align:center;
+	
 }
 
 /* Specific */
 
 .textSection {
 	width: 75%;
-	height: 25%;
+	min-height: 25%;
 	padding: 15px;
 	margin:auto;
 	border: 2px solid var(--main);
@@ -102,6 +133,7 @@ button {
 
 .menu {
 	display:none;
+	height:90%;
 }
 
 #formOptions {
