@@ -42,21 +42,25 @@ function showOption(option){
 
 function selectOption(option){
 	const nextTextNodeId = option.nextText;
-	state = Object.assign(state, option.setState);
+	const item = allItems.filter((item) => {
+		return item.name == option.targetItem;
+	})
+	item.forEach((item) => {
+		item = Object.assign(item, option.setState);
+	})
+	
 	showTextNode(nextTextNodeId);
 }
 
 function change(target){
 	if(target=='inventory'){
-		for (let i of allItems) {
-			if (i.state === 3) {
-				inventory.push(i);
-			}
-		}
-		for(i=0;i<inventory.length;i++){
-			inv.innerHTML+=inventory[i].name+'</span><br>';
-		}
-		console.log(inventory);
+		const holding = allItems.filter((item) => {
+			return item.state == 3;
+		})
+		
+		holding.forEach((item) => {
+			inv.innerHTML+=item.name+'</span><br>';
+		})
 	} else {
 		inv.innerHTML="";
 		inventory=[];

@@ -21,7 +21,8 @@ class Item {
     }
 };
 
-/* The possible states of an Item:
+/* 
+The possible states of an Item:
 0: is out-of-play (destroyed or not yet introduced).
 1: is somewhere in the game world, but not yet found by the player.
 2: is near and can be grabbed.
@@ -82,17 +83,21 @@ const textNodes = [
 		text: "You wake up. You are in a completely black place, which you don't see anything. There is something near your right foot.",
 		options: [{
 			text:"Pick it up",
+			targetItem: "Lit Stone",
+			setState: {state:3},
 			nextText: 5
 		}]
 	},
 	{
 		id: 5, // Room being lit
-		text: "You pick it up. It is cold, but as the seconds pass, it gets warmer and warmer. At a certain point, it starts a light. It's faint, but enough to light up the room you're in. There is a dagger on the ground, next to a door. There is also a black gem with a triangular shape on a small and old table.",
+		text: "You pick it up. It is cold, but as the seconds pass, it gets warmer and warmer. At a certain point, it starts a light. It's faint, but enough to light up the place you're in. There is a dagger on the ground, next to a door. There is also a black gem with a triangular shape on a small and old table.",
 		options: [{
 			text:"Examine the Black Gem",
 			nextText: 7
 		},{
 			text:"Grab the dagger",
+			targetItem: "Dagger",
+			setState: {state:3},
 			nextText: 9
 		},{
 			text:"Go outside",
@@ -101,12 +106,14 @@ const textNodes = [
 	},
 	{
 		id: 6, // Room after
-		text: "You pick it up. It is cold, but as the seconds pass, it gets warmer and warmer. At a certain point, it starts a light. It's faint, but enough to light up the room you're in. There is a dagger on the ground, next to a door. There is also a black gem with a triangular shape on a small and old table.",
+		text: "You are back in the room. There is a dagger on the ground, next to a door. There is also a black gem with a triangular shape on a small and old table.",
 		options: [{
 			text:"Examine the Black Gem",
 			nextText: 7
 		},{
 			text:"Grab the dagger",
+			targetItem: "Dagger",
+			setState: {state:3},
 			nextText: 9
 		}]
 	},
@@ -115,6 +122,8 @@ const textNodes = [
 		text: "You approach the Black Gem. It instantly made you feel a bad omen. You remember that this kind of stone was called Vuxirna.",
 		options: [{
 			text:"Pick it up",
+			targetItem: "Old Vuxirna",
+			setState: {state:3},
 			nextText: 8
 		},{
 			text:"Go back",

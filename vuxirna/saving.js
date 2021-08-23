@@ -7,6 +7,7 @@ function saveGame(){
 		localStorage.setItem('cTxt',getComputedStyle(d).getPropertyValue("--txt"));
 	
 		localStorage.setItem('gSavepoint',savepoint);
+		localStorage.setItem('gItems', JSON.stringify(allItems));
 	
 	} else {
 		alert("Your browser does not support the saving system :/");
@@ -22,7 +23,9 @@ function loadGame(){
 			localStorage.getItem('cLight'),
 			localStorage.getItem('cTxt'),
 		);
-		
+		if(localStorage.getItem('gItems')!==null){
+			allItems = JSON.parse(localStorage.getItem('gItems'));
+		}
 		startGame(parseInt(localStorage.getItem('gSavepoint')));
 		
 		
