@@ -3,10 +3,9 @@ const scr = document.getElementById("screen"),
 	menus = scr.getElementsByClassName("menu"),
 	d = document.documentElement,
 	actions = document.getElementById("actions");
-	b1 = document.getElementById("b1"),
-	b2 = document.getElementById("b2"),
 	text = document.getElementById("text"),
-	inv = document.getElementById("inv");
+	inv = document.getElementById("inv"),
+	invDesc = document.getElementById("invDesc");
 var savepoint;
 let state={};
 
@@ -42,89 +41,49 @@ function showOption(option){
 
 function selectOption(option){
 	const nextTextNodeId = option.nextText;
-	const item = allItems.filter((item) => {
-		return item.name == option.targetItem;
-	})
-	item.forEach((item) => {
-		item = Object.assign(item, option.setState);
-	})
-	
+
+	if(option.targetItem !== null && option.targetItem !== undefined){
+		Object.assign(option.targetItem, option.setState);
+		console.log(option.targetItem.name + ", " + option.setState);
+	}
+
 	showTextNode(nextTextNodeId);
 }
 
 function change(target){
 	if(target=='inventory'){
-		const holding = allItems.filter((item) => {
+		let holding = allItems.filter((item) => {
 			return item.state == 3;
 		})
 		
+		if(holding.length==0){
+			inv.innerHTML="Your inventory is empty.";
+		} else {
+			inv.innerHTML="";
+		}
 		holding.forEach((item) => {
-			inv.innerHTML+=item.name+'</span><br>';
+			const aItem = document.createElement('a');
+			aItem.innerText = item.name;
+			aItem.classList.add('invItems');
+			
+			aItem.addEventListener('mouseenter', ()=> invDesc.innerText=item.desc);
+			aItem.addEventListener('mouseout', ()=> invDesc.innerHTML="Hover over the item to see its description.<br>Click to see detailed info.");
+			aItem.addEventListener('click', ()=> {
+				const invChild = inv.childNodes;
+				for(i=0;i<invChild.length;i++){
+					invChild[i].classList.remove('selectedInvItem');
+				}
+				aItem.classList.add('selectedInvItem');
+			});
+			inv.appendChild(aItem);
 		})
-	} else {
-		inv.innerHTML="";
-		inventory=[];
+		holding = [];
 	}
 	for(i=0;i<menus.length;i++){
 		menus[i].style.display="none";
 	}	
 	document.getElementById(target).style.display="block";
 }
-
-/* function prog(){
-	switch(progress){
-		case 0:
-			text.innerHTML="You are unconscious. You can't feel yourself. You are in complete nothingness, in the void of the dark.";
-			progress++;
-			break;
-		case 1:
-			text.innerHTML="You still can't access your thoughts. You feel like you are empty. At least now you feel something.";
-			progress++;
-			break;
-		case 2:
-			text.innerHTML="Waking up is hard. You still try to concentrate your mind to it. At least now you can think.";
-			progress++;
-			break;
-		case 3:
-			text.innerHTML="You wake up. You are in a completely black place, which you don't see anything. There is something near your right foot.";
-			b1.style.display="none";
-			b2.style.display="block";
-			b2.onclick = function(){
-				progress++;
-				prog();
-			}
-			break;
-		case 4:
-			text.innerHTML="You pick it up. It is cold, but as the seconds pass, it gets warmer and warmer. At a certain point, it starts a light. It's faint, but enough to light up the room you're in. There is a dagger on the ground, next to a door. There is also a black gem with a triangular shape on a small and old table."
-			b1.style.display="block";
-			b2.style.display="block";
-			b1.innerHTML="Examine the Black Gem"
-			b2.innerHTML="Grab the dagger"
-			b1.onclick = function(){
-				text.innerHTML="You approach the Black Gem. It instantly made you feel a bad omen. You remember that this kind of stone was called Vuxirna."
-				b1.innerHTML="Pick it up";
-				b2.style.display="none";
-				b1.onclick = function(){
-					text.innerHTML="You pick it up. It is as warm as your body. It feels soft, even if it is rock hard, and it makes you feel watched.";
-					vux.state=3;
-					b1.innerHTML="Go back";
-					b1.onclick=function(){
-					}
-				}
-			}
-			b2.onclick = function() {
-				text.innerHTML="You pick up the dagger. It is light and easy to use. It doesn't look too bad."
-				dagger.state=3;
-				b2.style.display="none";
-			}
-			progress++;
-			break;
-		case 5:
-			text.innerHTML="";
-			progress++;
-			break;
-	}
-}*/
 
 function setTheme(main,dark,behind,light,txt){
 	d.style.setProperty('--main', main.toString());
@@ -139,3 +98,6 @@ function setTheme(main,dark,behind,light,txt){
 change('main');
 startGame(1);
 
+const testing = [{
+	item: vux
+}]
