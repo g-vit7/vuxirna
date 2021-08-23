@@ -15,9 +15,10 @@ class Player extends Entity {
 }
 
 class Item {
-    constructor(name, state) {
+    constructor(name, state, amount) {
         this.name = name;
         this.state = state;
+		this.amount = amount;
     }
 };
 
@@ -30,24 +31,29 @@ The possible states of an Item:
 */
 
 class Weapon extends Item {
-	constructor(name, state, dmg){
-		super(name, state);
-		this.dmg = dmg
+	constructor(name, state, amount, dmg){
+		super(name, state, amount);
+		this.dmg = dmg;
 	}
 }
 
 class Vuxirna extends Item {
-	constructor(name, state, souls){
-		super(name, state);
+	constructor(name, state, amount, souls){
+		super(name, state, amount);
 		this.souls = souls;
 	}
 }
 
 var allItems = [
-	vux = new Vuxirna("Old Vuxirna",1,0),
-	dagger = new Weapon("Dagger",1,4),
-	light = new Item("Lit Stone",1)
+	vux = new Vuxirna("Old Vuxirna",1,1,0),
+	dagger = new Weapon("Dagger",1,1,4),
+	light = new Item("Lit Stone",1,1)
 ];
+
+// Each item description.
+vux.desc = "A black and strange gem with a deep and dark purple glow. It feels bad and good to hold it at the same time.";
+dagger.desc = "A simple dagger. Probably not that useful, but better than nothing.";
+light.desc = "A warm white stone, with a cozy light emanating from it.";
 
 var inventory = [];
 
@@ -83,7 +89,7 @@ const textNodes = [
 		text: "You wake up. You are in a completely black place, which you don't see anything. There is something near your right foot.",
 		options: [{
 			text:"Pick it up",
-			targetItem: "Lit Stone",
+			targetItem: light,
 			setState: {state:3},
 			nextText: 5
 		}]
@@ -96,7 +102,7 @@ const textNodes = [
 			nextText: 7
 		},{
 			text:"Grab the dagger",
-			targetItem: "Dagger",
+			targetItem: dagger,
 			setState: {state:3},
 			nextText: 9
 		},{
@@ -112,7 +118,7 @@ const textNodes = [
 			nextText: 7
 		},{
 			text:"Grab the dagger",
-			targetItem: "Dagger",
+			targetItem: dagger,
 			setState: {state:3},
 			nextText: 9
 		}]
@@ -122,7 +128,7 @@ const textNodes = [
 		text: "You approach the Black Gem. It instantly made you feel a bad omen. You remember that this kind of stone was called Vuxirna.",
 		options: [{
 			text:"Pick it up",
-			targetItem: "Old Vuxirna",
+			targetItem: vux,
 			setState: {state:3},
 			nextText: 8
 		},{
