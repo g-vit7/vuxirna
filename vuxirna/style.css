@@ -1,0 +1,115 @@
+:root {
+	--main: #7d8dd4;
+	--rgbMain: 125, 141, 212;
+	--dark: #3f4b73;
+	--rgbDark: 41, 55, 102;
+	--light: #91b9d9;
+	--behind: #181a21;
+	--txt: white;
+}
+
+* {
+	margin:0;
+	padding:0;
+	box-sizing: border-box;
+	overflow:hidden;
+	color: var(--txt);
+}
+
+body {
+	background: var(--dark);
+	color: white;
+	font-family:monospace;
+}
+
+nav {
+	background-color: var(--main);
+}
+
+li {
+	display:inline;
+	float:left;
+	width:12.5%;
+}
+
+a {
+	text-align:center;
+	display:block;
+	font-family:monospace;
+	color:white;
+	background: var(--main);
+	text-decoration:none;	
+	padding: 3px;
+	border-radius:5px;
+}
+
+button {
+	padding: 5px;
+	margin: 5px;
+	width: 20vw;
+	height:45px;
+}
+
+.click {
+	background: var(--main);
+	font-family:monospace;
+	color:white;
+	border: 2px solid var(--main);
+	box-shadow: 0 0 2px var(--main);
+	text-shadow: 0 0 2px var(--main);
+}
+
+.click:hover {
+	border: 2px solid var(--light);
+	background: var(--light);
+}
+
+.click:active {
+	text-shadow: 0 0 6px white;
+	box-shadow: 0 0 6px white;
+}
+
+/* Specific */
+
+.textSection {
+	width: 75%;
+	height: 25%;
+	padding: 15px;
+	margin:auto;
+	border: 2px solid var(--main);
+	border-bottom: 2px dashed var(--main);
+	box-shadow: 0px 0 30px -2px var(--main);
+	text-shadow: 0 0 1px var(--txt);
+	text-align: center;
+}
+
+#screen {
+	display: block;
+	position:relative;
+	margin: 10vh 5vw;
+	width: 90vw;
+	height: 65vh;
+	border: 2px solid var(--main);
+	box-shadow: 0 0 5px var(--main);
+	background: var(--behind);
+}
+
+#actions {
+	position:absolute;
+	bottom:10px;
+	left: 10px;
+}
+
+.menu {
+	display:none;
+}
+
+#formOptions {
+	float:left;
+	text-align:left;
+}
+
+.formSaving {
+	width:10%;
+	float: right;
+}

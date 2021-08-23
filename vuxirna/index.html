@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8"/>
+	<title>Dark</title>
+	<link rel="stylesheet" href="style.css"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+	<div id="screen" class="basic">
+		<nav>
+			<ul>
+				<li><a class="click" onclick="change('main')">Game</a></li>
+				<li><a class="click" onclick="change('status')">Status</a></li>
+				<li><a class="click" onclick="change('inventory')">Inventory</a></li>
+				<li style="float:right"><a class="click" onclick="change('opt')">Options</a></li>
+			</ul>
+		</nav>
+		<!-- This is the Main Div. -->
+		<div id="main" class="menu">
+			<div class="textSection">
+				<span id="text">...</span>
+			</div>
+			<!-- This is where all the options go. -->
+			<div id="actions"></div>
+		</div>
+		<!-- This is the Options Div. -->
+		<div id="opt" class="menu">
+			<div class="textSection">
+				<form id="formOptions">
+					<h4>Theme:</h4>
+					<input type="radio" id="rbStormwind" 
+					name="theme" value="Stormwind" 
+					onchange="setTheme('#7d8dd4','#3f4b73','#181a21','#91b9d9','white')">
+					
+					<label for="rbStormwind">Stormwind (Dark)</label><br>
+					
+					<input type="radio" id="rbLimbo" 
+					name="theme" value="Limbo"
+					onchange="setTheme('black','#111','#222','#333','white')">
+					
+					<label for="rbLimbo">Limbo (Dark)</label><br>
+					
+					<input type="radio" id="rbVuxirna" 
+					name="theme" value="Vuxirna"
+					onchange="setTheme('#440c66','#180226','#220833','#6b2d91','white')">
+					
+					<label for="rbVuxirna">Vuxirna (Dark)</label><br>
+					
+					<input type="radio" id="rbAstra" 
+					name="theme" value="Astra"
+					onchange="setTheme('#ebde59','#ebe5a7','#f2efce','#ffec1c','#302f1f')">
+					
+					<label for="rbVuxirna">Astra (Light)</label><br>
+				</form>
+				<a class="click formSaving" onclick="saveGame()">Save</a><br><br>
+				<a class="click formSaving" onclick="loadGame()">Load</a>
+			</div>
+		</div>
+		<!-- This is the Status Div. -->
+		<div id="status" class="menu">
+			<div class="textSection">
+				<span>This is your status.</span>
+			</div>
+		</div>
+		<!-- This is the Inventory Div. -->
+		<div id="inventory" class="menu">
+			<div class="textSection">
+				<span id="inv"></span>
+			</div>
+		</div>
+	</div>
+	<script src="classes.js"></script>
+	<script src="front.js"></script>
+	<script src="saving.js"></script>
+</body>
+</html>
