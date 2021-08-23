@@ -27,7 +27,7 @@ function loadGame(){
 			allItems = JSON.parse(localStorage.getItem('gItems'));
 		}
 		startGame(parseInt(localStorage.getItem('gSavepoint')));
-		
+		change('main');
 		
 	} else {
 		alert("Your browser does not support the saving system :/");
