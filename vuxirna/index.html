@@ -14,6 +14,7 @@
 				<li><a class="click" onclick="change('status')">Status</a></li>
 				<li><a class="click" onclick="change('inventory')">Inventory</a></li>
 				<li style="float:right"><a class="click" onclick="change('opt')">Options</a></li>
+				<li style="float:right"><a class="click" onclick="loadGame()">Load</a></li>
 			</ul>
 		</nav>
 		<!-- This is the Main Div. -->
@@ -44,7 +45,7 @@
 					
 					<input type="radio" id="rbVuxirna" 
 					name="theme" value="Vuxirna"
-					onchange="setTheme('#440c66','#180226','#220833','#6b2d91','white')">
+					onchange="setTheme('#440c66','#180226','#220833','#501078','white')">
 					
 					<label for="rbVuxirna">Vuxirna (Dark)</label><br>
 					
@@ -66,8 +67,10 @@
 		</div>
 		<!-- This is the Inventory Div. -->
 		<div id="inventory" class="menu">
-			<div class="textSection">
-				<span id="inv"></span>
+			<div id="inv" style="float:left"></div>
+			<div id="invDesc">
+				Hover over the item to see its description.<br>
+				Click to see detailed info.
 			</div>
 		</div>
 	</div>
