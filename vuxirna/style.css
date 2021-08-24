@@ -24,13 +24,13 @@ body {
 
 nav {
 	background-color: var(--main);
-	height:10%;
 }
 
 li {
 	display:inline;
 	float:left;
 	width:12.5%;
+	
 }
 
 a {
