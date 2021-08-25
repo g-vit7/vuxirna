@@ -1,9 +1,7 @@
 :root {
 	--main: #7d8dd4;
-	--rgbMain: 125, 141, 212;
 	--dark: #3f4b73;
-	--rgbDark: 41, 55, 102;
-	--light: #91b9d9;
+	--light: #8797de;
 	--behind: #181a21;
 	--txt: white;
 }
@@ -24,6 +22,7 @@ body {
 
 nav {
 	background-color: var(--main);
+	width:100%;
 }
 
 li {
@@ -76,6 +75,7 @@ a.invItems {
 	border: 2px solid transparent;
 	padding: 4px;
 	margin: auto;
+	color: var(--text);
 }
 .invItems:hover {
 	box-shadow: 0 0 4px var(--main);
@@ -94,7 +94,9 @@ div a.selectedInvItem {
 }
 #invDesc {
 	border: 1px solid var(--main);
-	height: 101%;
+	height: 100%;
+	background-image: linear-gradient(to bottom, var(--dark), 5%, transparent);
+	box-shadow: 0 0 10px 5px var(--dark);
 	width:50%;
 	text-align:center;
 	
@@ -133,7 +135,7 @@ div a.selectedInvItem {
 
 .menu {
 	display:none;
-	height:90%;
+	height:100%;
 }
 
 #formOptions {
@@ -144,4 +146,51 @@ div a.selectedInvItem {
 .formSaving {
 	width:10%;
 	float: right;
+}
+
+#notifications {
+	text-align:center;
+	position:absolute;
+	right:0;
+	bottom:0;
+	border: 2px solid var(--main);
+	background: var(--behind);
+	width: 35vw;
+	height: 10vh;
+	display:none;
+}
+#nclose {
+	position:absolute;
+	font-size:15px;
+	background:var(--behind);
+	width:20px;
+	height:20px;
+	cursor:pointer;
+}
+#nicon{
+	width:20%;
+	height:100%;
+	float:right;
+	font-size:50px;
+	border-right: 2px solid var(--main);
+}
+#ntxt {
+	margin:10px;
+	width:80%;
+	height:100%;
+	font-size: 18px;
+}
+.fadingIn {
+	animation: fadeIn linear 1s;
+}
+.fadingOut {
+	animation: fadeOut linear 1s;
+}
+@keyframes fadeIn {
+	0% {opacity:0;}
+	100% {opacity:1;}
+}
+@keyframes fadeOut {
+	0% {opacity:1;}
+	100% {opacity:0;}
 }

@@ -90,37 +90,90 @@ const textNodes = [
 		options: [{
 			text:"Pick it up",
 			targetItem: light,
-			setState: {state:3},
+			chk:function(){
+				if(this.targetItem.state==3){
+					return false;
+				} else {
+					return true;
+				}
+			},
+			func:function(){
+				this.targetItem.state=3;
+				notify("item",this.targetItem);
+			},
 			nextText: 5
 		}]
 	},
 	{
 		id: 5, // Room being lit
-		text: "You pick it up. It is cold, but as the seconds pass, it gets warmer and warmer. At a certain point, it starts a light. It's faint, but enough to light up the place you're in. There is a dagger on the ground, next to a door. There is also a black gem with a triangular shape on a small and old table.",
+		text: "You pick it up. It is cold, but as the seconds pass, it gets warmer and warmer. At a certain point, it starts a light. It's faint, but enough to light up the place you're in.",
 		options: [{
 			text:"Examine the Black Gem",
+			itemText: " There is a black gem with a triangular shape on a small and old table.",
+			targetItem: vux,
+			chk:function(){
+				if(this.targetItem.state==3){
+					return false;
+				} else {
+					return true;
+				}
+			},
 			nextText: 7
 		},{
 			text:"Grab the dagger",
+			itemText: " There is a dagger on the ground, next to the door.",
 			targetItem: dagger,
-			setState: {state:3},
+			chk:function(){
+				if(this.targetItem.state==3){
+					return false;
+				} else {
+					return true;
+				}
+			},
+			func:function(){
+				this.targetItem.state=3;
+				notify("item",this.targetItem);
+			},
 			nextText: 9
 		},{
-			text:"Go outside",
+			text:"Leave room",
 			nextText: 10
 		}]
 	},
 	{
 		id: 6, // Room after
-		text: "You are back in the room. There is a dagger on the ground, next to a door. There is also a black gem with a triangular shape on a small and old table.",
+		text: "You are back in the room.",
 		options: [{
 			text:"Examine the Black Gem",
+			itemText: " There is a black gem with a triangular shape on a small and old table.",
+			targetItem: vux,
+			chk:function(){
+				if(this.targetItem.state==3){
+					return false;
+				} else {
+					return true;
+				}
+			},
 			nextText: 7
 		},{
 			text:"Grab the dagger",
+			itemText: " There is a dagger on the ground, next to the door.",
 			targetItem: dagger,
-			setState: {state:3},
+			chk:function(){
+				if(this.targetItem.state==3){
+					return false;
+				} else {
+					return true;
+				}
+			},
+			func:function(){
+				this.targetItem.state=3;
+				notify("item",this.targetItem);
+			},
 			nextText: 9
+		},{
+			text:"Leave room",
+			nextText: 10
 		}]
 	},
 	{
@@ -129,7 +182,10 @@ const textNodes = [
 		options: [{
 			text:"Pick it up",
 			targetItem: vux,
-			setState: {state:3},
+			func:function(){
+				this.targetItem.state=3;
+				notify("item",this.targetItem);
+			},
 			nextText: 8
 		},{
 			text:"Go back",
