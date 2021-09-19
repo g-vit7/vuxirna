@@ -6,12 +6,18 @@ const scr = document.getElementById("screen"),
 	text = document.getElementById("text"),
 	inv = document.getElementById("inv"),
 	invDesc = document.getElementById("invDesc"),
+	invProps = document.getElementById("invProps"),
 	notifications = document.getElementById("notifications"),
 	nicon = document.getElementById("nicon"),
-	ntxt = document.getElementById("ntxt");
+	ntxt = document.getElementById("ntxt"),
+	equip = document.getElementById("equip"),
+	unequip = document.getElementById("unequip"),
+	hpBar = document.getElementById("hpBar"),
+	enBar = document.getElementById("enBar");
+	
 var savepoint;
 
-// Functions ----------
+// Useful Functions ----------
 function startGame(chk){
 	showTextNode(chk);
 }
@@ -55,7 +61,7 @@ function selectOption(option){
 function change(target){
 	if(target=='inventory'){
 		let holding = allItems.filter((item) => {
-			return item.state == 3;
+			return item.state>0;
 		})
 		
 		if(holding.length==0){
@@ -63,23 +69,91 @@ function change(target){
 		} else {
 			inv.innerHTML="";
 		}
+		
 		holding.forEach((item) => {
 			const aItem = document.createElement('a');
 			aItem.innerText = item.name;
 			aItem.classList.add('invItems');
-			
 			aItem.addEventListener('mouseenter', ()=> invDesc.innerText=item.desc);
-			aItem.addEventListener('mouseout', ()=> invDesc.innerHTML="Hover over the item to see its description.<br>Click to see detailed info.");
+			aItem.addEventListener('mouseout', ()=> invDesc.innerHTML="Hover over the item to see its description.<br>Click to see detailed info.<br><br>You can equip one weapon at once.");
 			aItem.addEventListener('click', ()=> {
 				const invChild = inv.childNodes;
-				for(i=0;i<invChild.length;i++){
-					invChild[i].classList.remove('selectedInvItem');
+				if(aItem.classList.contains('selectedInvItem')){
+					aItem.classList.remove('selectedInvItem');
+					invProps.style.display="none";
+					invDesc.style.display="block";
+				} else {
+					for(i=0;i<invChild.length;i++){
+						invChild[i].classList.remove('selectedInvItem');
+					}
+					aItem.classList.add('selectedInvItem');
+					invDesc.style.display="none";
+					invProps.style.display="block";
+				}	
+				console.log(item);
+				// This console log is to monitor the item.
+				// When the Load function is called, allItems items lose
+				// all their instances. This is very bad ._.
+				
+				document.getElementById("prop1").innerText = item.name;
+				document.getElementById("prop2").innerText = item.amount;
+				if(item.type=="Vuxirna"){
+					document.getElementById("equip").style.display="none";
+					document.getElementById("unequip").style.display="none";
+					document.getElementById("p3").innerText = "Souls: ";
+					document.getElementById("prop3").innerText = item.souls;
+					
+				} else if(item.type=="Weapon"){
+					document.getElementById("p3").innerText = "Damage: ";
+					document.getElementById("prop3").innerText = item.dmg;
+					equip.onclick=function(){
+						item.state=2;
+						player.dmg+=item.dmg;
+						document.getElementById("equip").style.display="none";
+						document.getElementById("unequip").style.display="block";
+						document.getElementById("eqp2").innerText = item.name;
+						notify("equip",item);
+					}
+					unequip.onclick=function(){
+						item.state=1;
+						player.dmg-=item.dmg;
+						document.getElementById("unequip").style.display="none";
+						document.getElementById("equip").style.display="block";
+						document.getElementById("eqp2").innerText = "None";
+						notify("unequip",item);
+					}
+					
+					document.getElementById("p3").innerText = "Damage: ";
+					if(aItem.classList.contains('selectedInvItem')){	
+						if(item.state==2){
+							document.getElementById("equip").style.display="none";
+							document.getElementById("unequip").style.display="block";
+						} else {
+							document.getElementById("unequip").style.display="none";
+							document.getElementById("equip").style.display="block";
+						}
+					} else {
+						document.getElementById("equip").style.display="none";
+						document.getElementById("unequip").style.display="none";
+					}
+				} else if(item.type=="Item"){
+					document.getElementById("equip").style.display="none";
+					document.getElementById("unequip").style.display="none";
 				}
-				aItem.classList.add('selectedInvItem');
 			});
 			inv.appendChild(aItem);
 		})
 		holding = [];
+	} else if(target=='status'){
+		document.getElementById("stt1").innerText = player.name;
+		document.getElementById("stt2").innerText = player.level;
+		document.getElementById("stt3").innerText = player.dmg;
+		document.getElementById("stt4").innerText = player.ability;
+		
+		hpBar.style.width=player.hp/player.maxHp*100 + "%";
+		hpBar.innerText=player.hp/player.maxHp*100 + "%";
+		enBar.style.width=player.energy/player.maxEnergy*100 + "%";
+		enBar.innerText=player.energy/player.maxEnergy*100 + "%";
 	}
 	for(i=0;i<menus.length;i++){
 		menus[i].style.display="none";
@@ -97,10 +171,19 @@ function setTheme(main,dark,behind,light,txt){
 }
 
 function notify(type,arg){
-	if(type=="item"){
-		ntxt.innerText=arg.name + "  has been acquired.";
+	switch(type){
+		case "item":
+			ntxt.innerText=arg.name + " has been acquired.";
+			break;
+		case "equip":
+			ntxt.innerText=arg.name + " has been equipped.";
+			break;
+		case "unequip":
+			ntxt.innerText=arg.name + " has been unequipped.";
+			break;
+		default:
+			ntxt.innerText = type;
 	}
-	
 	
 	fadeIn(notifications);
 	setTimeout(function(){fadeOut(notifications)},5000);
