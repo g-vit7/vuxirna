@@ -12,6 +12,7 @@
 	box-sizing: border-box;
 	overflow:hidden;
 	color: var(--txt);
+	user-select:none;
 }
 
 body {
@@ -41,6 +42,7 @@ a {
 	text-decoration:none;	
 	padding: 3px;
 	border-radius:5px;
+	cursor:default;
 }
 
 button {
@@ -57,6 +59,7 @@ button {
 	border: 2px solid var(--main);
 	box-shadow: 0 0 2px var(--main);
 	text-shadow: 0 0 2px var(--main);
+	cursor:default;
 }
 
 .click:hover {
@@ -82,24 +85,50 @@ a.invItems {
 }
 .invItems:active {
 	border: 2px inset var(--main);
+	background:var(--main);
 }
 
 div a.selectedInvItem {
 	border: 2px inset var(--main);
+	background:var(--dark);
 }
-
+#text {
+	user-select:text;
+}
+#inventory > * {
+	padding:10px;
+}
 #inv {
 	width:25%;
+	padding:0;
 	height:100%;
+	float:left;
+	text-align:center;
 }
 #invDesc {
+	text-align:center;
+}
+#invProps {
+	display:none;
+}
+#invEquip {
+	display:block;
+	width: 25%;
+	text-align: left;
+}
+.inv {
 	border: 1px solid var(--main);
 	height: 100%;
 	background-image: linear-gradient(to bottom, var(--dark), 5%, transparent);
 	box-shadow: 0 0 10px 5px var(--dark);
-	width:50%;
-	text-align:center;
-	
+	width:50%;	
+	float:left;
+}
+
+.btnEquip {
+	position:absolute;
+	bottom:5px;
+	display:none;
 }
 
 /* Specific */
@@ -148,6 +177,38 @@ div a.selectedInvItem {
 	float: right;
 }
 
+#barCont {
+	position:absolute;
+	bottom:0;
+	width:30%;
+	margin: 5px;
+}
+
+.cont {
+	border: 1px solid var(--main);
+	margin:5px;
+	margin-top: 1px;
+	position:relative;
+	height: 18px;
+	background: var(--dark);
+}
+
+.bars {
+	background: var(--main);
+	margin: 1px;
+	box-shadow:0 0 5px 5px var(--light);
+	height: 100%;
+	text-align:center;
+}
+#hpBar {
+	width: 75%;
+}
+#enBar {
+	width: 45%;
+}
+
+/** Notifications **/
+
 #notifications {
 	text-align:center;
 	position:absolute;
@@ -156,7 +217,7 @@ div a.selectedInvItem {
 	border: 2px solid var(--main);
 	background: var(--behind);
 	width: 35vw;
-	height: 10vh;
+	height: 75px;
 	display:none;
 }
 #nclose {
