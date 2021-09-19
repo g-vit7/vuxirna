@@ -19,8 +19,14 @@
 		</nav>
 		<!-- This is the Main Div. -->
 		<div id="main" class="menu">
-			<div class="textSection">
-				<span id="text">...</span>
+			<div id="mainGame">
+				<div class="textSection">
+					<span id="text">...</span>
+				</div>
+			</div>
+			<!-- This is the Battle Screen Div. -->
+			<div id="battleScreen">
+				
 			</div>
 			<!-- This is where all the options go. -->
 			<div id="actions"></div>
@@ -39,7 +45,7 @@
 					
 					<input type="radio" id="rbLimbo" 
 					name="theme" value="Limbo"
-					onchange="setTheme('black','#111','#222','#333','white')">
+					onchange="setTheme('black','#111','#222','#232323','white')">
 					
 					<label for="rbLimbo">Limbo (Dark)</label><br>
 					
@@ -61,16 +67,36 @@
 		</div>
 		<!-- This is the Status Div. -->
 		<div id="status" class="menu">
-			<div class="textSection">
-				<span>This is your status.</span>
+			<div id="stt">
+				<p>Name: <span id="stt1"></span></p>
+				<p>Level: <span id="stt2"></span></p>
+				<p>Damage (Total): <span id="stt3"></span></p>
+				<p>Ability Power: <span id="stt4"></span></p>
+			</div>
+			<div id="barCont">
+				<p>Health:</p>
+				<div id="hpCont" class="cont"><div id="hpBar" class="bars"></div></div>
+				<p>Energy:</p>
+				<div id="enCont" class="cont"><div id="enBar" class="bars"></div></div>
 			</div>
 		</div>
 		<!-- This is the Inventory Div. -->
 		<div id="inventory" class="menu">
-			<div id="inv" style="float:left"></div>
-			<div id="invDesc">
-				Hover over the item to see its description.<br>
-				Click to see detailed info.
+			<div id="inv"></div>
+			<div id="invDesc" class="inv">
+				Hover over the item to see its description.<br>Click to see detailed info.<br><br>You can equip one weapon at once.
+			</div>
+			<div id="invProps" class="inv">
+				<p>Name: <span id="prop1"></span></p>
+				<p>Amount: x<span id="prop2"></span></p>
+				<p><span id="p3">Damage: </span><span id="prop3"></span></p>
+			</div>
+			<div id="invEquip">
+				<p>Body: <span id="eqp1"></span></p>
+				<p>Weapon: <span id="eqp2"></span></p>
+				<p>Accessory: <span id="eqp3"></span></p>
+				<button id="equip" class="click btnEquip">Equip</button>
+				<button id="unequip" class="click btnEquip">Unequip</button>
 			</div>
 		</div>
 	</div>
@@ -84,6 +110,7 @@
 	
 	<script src="classes.js"></script>
 	<script src="front.js"></script>
+	<script src="battle.js"></script>
 	<script src="saving.js"></script>
 </body>
 </html>
