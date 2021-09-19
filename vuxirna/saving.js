@@ -5,7 +5,6 @@ function saveGame(){
 		localStorage.setItem('cBehind',getComputedStyle(d).getPropertyValue("--behind"));
 		localStorage.setItem('cLight',getComputedStyle(d).getPropertyValue("--light"));
 		localStorage.setItem('cTxt',getComputedStyle(d).getPropertyValue("--txt"));
-	
 		localStorage.setItem('gSavepoint',savepoint);
 		localStorage.setItem('gItems', JSON.stringify(allItems));
 	
