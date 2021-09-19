@@ -1,22 +1,28 @@
 class Entity {
-	constructor(id, name, hp){
+	constructor(id, name, hp, maxHp, level, dmg){
 		this.id=id;
 		this.name=name;
 		this.hp=hp;
+		this.maxHp=maxHp;
+		this.level=level;
+		this.dmg=dmg;
 	}
 }
 
 class Player extends Entity {
-	constructor(id, name, hp, level, ability){
-		super(id, name, hp);
+	constructor(id, name, hp, maxHp, level, dmg, ability, energy, maxEnergy){
+		super(id, name, hp, maxHp, level, dmg);
 		this.level=level;
 		this.ability=ability;
+		this.energy=energy;
+		this.maxEnergy=maxEnergy;
 	}
 }
 
 class Item {
-    constructor(name, state, amount) {
-        this.name = name;
+    constructor(type, name, state, amount) {
+        this.type = type;
+		this.name = name;
         this.state = state;
 		this.amount = amount;
     }
@@ -25,29 +31,33 @@ class Item {
 /* 
 The possible states of an Item:
 0: is out-of-play (destroyed or not yet introduced).
-1: is somewhere in the game world, but not yet found by the player.
-2: is near and can be grabbed.
-3: is in the player's possession.
+1: is in the player's inventory.
+2: is equipped.
 */
 
 class Weapon extends Item {
-	constructor(name, state, amount, dmg){
-		super(name, state, amount);
+	constructor(type, name, state, amount, dmg){
+		super(type, name, state, amount);
 		this.dmg = dmg;
 	}
 }
 
 class Vuxirna extends Item {
-	constructor(name, state, amount, souls){
-		super(name, state, amount);
+	constructor(type, name, state, amount, souls){
+		super(type, name, state, amount);
 		this.souls = souls;
 	}
 }
 
 var allItems = [
-	vux = new Vuxirna("Old Vuxirna",1,1,0),
-	dagger = new Weapon("Dagger",1,1,4),
-	light = new Item("Lit Stone",1,1)
+	vux = new Vuxirna("Vuxirna","Old Vuxirna",0,1,0),
+	dagger = new Weapon("Weapon","Dagger",0,1,4),
+	light = new Item("Item","Lit Stone",0,1)
+];
+
+var allEntities = [
+	player = new Player(0, "Mary", 100, 100, 1, 4, 0, 100, 100),
+	lost = new Entity(1, "Lost Soul", 20, 20, 5, 1)
 ];
 
 // Each item description.
@@ -89,17 +99,17 @@ const textNodes = [
 		text: "You wake up. You are in a completely black place, which you don't see anything. There is something near your right foot.",
 		options: [{
 			text:"Pick it up",
-			targetItem: light,
+			target: allItems[2],
 			chk:function(){
-				if(this.targetItem.state==3){
+				if(this.target.state==1){
 					return false;
 				} else {
 					return true;
 				}
 			},
 			func:function(){
-				this.targetItem.state=3;
-				notify("item",this.targetItem);
+				this.target.state=1;
+				notify("item",this.target);
 			},
 			nextText: 5
 		}]
@@ -110,9 +120,9 @@ const textNodes = [
 		options: [{
 			text:"Examine the Black Gem",
 			itemText: " There is a black gem with a triangular shape on a small and old table.",
-			targetItem: vux,
+			target: allItems[0],
 			chk:function(){
-				if(this.targetItem.state==3){
+				if(this.target.state==1){
 					return false;
 				} else {
 					return true;
@@ -122,17 +132,17 @@ const textNodes = [
 		},{
 			text:"Grab the dagger",
 			itemText: " There is a dagger on the ground, next to the door.",
-			targetItem: dagger,
+			target: allItems[1],
 			chk:function(){
-				if(this.targetItem.state==3){
+				if(this.target.state==1){
 					return false;
 				} else {
 					return true;
 				}
 			},
 			func:function(){
-				this.targetItem.state=3;
-				notify("item",this.targetItem);
+				this.target.state=1;
+				notify("item",this.target);
 			},
 			nextText: 9
 		},{
@@ -146,9 +156,9 @@ const textNodes = [
 		options: [{
 			text:"Examine the Black Gem",
 			itemText: " There is a black gem with a triangular shape on a small and old table.",
-			targetItem: vux,
+			target: allItems[0],
 			chk:function(){
-				if(this.targetItem.state==3){
+				if(this.target.state==1){
 					return false;
 				} else {
 					return true;
@@ -158,17 +168,17 @@ const textNodes = [
 		},{
 			text:"Grab the dagger",
 			itemText: " There is a dagger on the ground, next to the door.",
-			targetItem: dagger,
+			target: allItems[1],
 			chk:function(){
-				if(this.targetItem.state==3){
+				if(this.target.state==1){
 					return false;
 				} else {
 					return true;
 				}
 			},
 			func:function(){
-				this.targetItem.state=3;
-				notify("item",this.targetItem);
+				this.target.state=1;
+				notify("item",this.target);
 			},
 			nextText: 9
 		},{
@@ -181,10 +191,10 @@ const textNodes = [
 		text: "You approach the Black Gem. It instantly made you feel a bad omen. You remember that this kind of stone was called Vuxirna.",
 		options: [{
 			text:"Pick it up",
-			targetItem: vux,
+			target: allItems[0],
 			func:function(){
-				this.targetItem.state=3;
-				notify("item",this.targetItem);
+				this.target.state=1;
+				notify("item",this.target);
 			},
 			nextText: 8
 		},{
@@ -194,12 +204,21 @@ const textNodes = [
 	},
 	{
 		id: 8,
-		text: "You pick it up. It is as warm as your body. It feels soft, even if it is rock hard, and it makes you feel watched.",
+		text: "You pick it up. It is as warm as your body. It feels soft, even if it is rock hard, and it makes you feel watched. You start to have a small rememberance of something familiar.",
 		options: [{
-			text:"Leave room",
-			nextText: 10
-		},{
-			text:"Go back",
+			text:"Remember",
+			target:player,
+			func:function(){
+				this.target.name = window.prompt("What is your name?");
+			},
+			nextText: 80
+		}]
+	},
+	{
+		id: 80,
+		text: "You remember your name, and a little of your past. You are "+player.name+". You used to live a peaceful life, and this peace, for some reason, has been destroyed.",
+		options: [{
+			text:"Proceed",
 			nextText: 6
 		}]
 	},
@@ -214,14 +233,14 @@ const textNodes = [
 			nextText: 6
 		}]
 	},
-	{
+	{	// outside before
 		id: 10,
-		text: "You are outside.",
+		text: "You leave the room, closing the old and almost falling door. You turn to see where you are, and are surprised by a dark and bizarre creature. It is slow, and you were able to evade it's attack. What do you do?",
 		options: [{
-			text:"Enter room",
+			text:"Fight",
 			nextText: 6
 		},{
-			text:"Proceed",
+			text:"Run away",
 			nextText: 10
 		}]
 	}
